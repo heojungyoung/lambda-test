@@ -13,6 +13,9 @@ repositories {
 }
 
 dependencies {
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.8'
+
     implementation platform('software.amazon.awssdk:bom:2.10.73')
     implementation 'software.amazon.awssdk:lambda'
     implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
@@ -36,5 +39,12 @@ task buildZip(type: Zip) {
     from processResources
     into('lib') {
         from configurations.runtimeClasspath
+    }
+}
+
+configurations {
+    all {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
     }
 }
